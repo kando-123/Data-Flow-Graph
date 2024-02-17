@@ -12,6 +12,8 @@ import java.util.*;
  */
 public class Step extends Component
 {
+    private String label;
+    
     /**
      * Collection of preceding components.
      * These can be:<br>
@@ -21,7 +23,7 @@ public class Step extends Component
      *   <li>a divergence, see Fig. 3.34.D., p. 87.</li>
      * </ul>
      */
-    private final Collection<Component> precedingComponents;
+    private final List<Component> precedingComponents;
     
     /**
      * Collection of succeeding components.
@@ -32,16 +34,18 @@ public class Step extends Component
      *   <li>a convergence, see Fig. 3.34.D., p. 87.</li>
      * </ul>
      */
-    private final Collection<Component> succeedingComponents;
+    private final List<Component> succeedingComponents;
     
     /**
      * Constructor.
+     * @param label
      */
-    public Step()
+    public Step(String label)
     {
         super(ComponentType.STEP);
-        precedingComponents = new HashSet<>();
-        succeedingComponents = new HashSet<>();
+        precedingComponents = new ArrayList<>();
+        succeedingComponents = new ArrayList<>();
+        this.label = label;
     }
     
     /**
@@ -145,5 +149,10 @@ public class Step extends Component
         {
             throw new Exception("Step.addSucceedingTransition");
         }
+    }
+    
+    public String getLabel()
+    {
+        return label;
     }
 }

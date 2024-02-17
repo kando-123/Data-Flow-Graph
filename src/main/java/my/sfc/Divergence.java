@@ -13,11 +13,12 @@ import java.util.*;
 public class Divergence extends Component
 {
     private Transition precedingTransition;
-    private Collection<Step> succeedingSteps;
+    private List<Step> succeedingSteps;
     
     public Divergence()
     {
         super(ComponentType.DIVERGENCE);
+        succeedingSteps = new ArrayList<>();
     }
     
     public void addPrecedingTransition(Transition transition)

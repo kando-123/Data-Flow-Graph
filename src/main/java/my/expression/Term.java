@@ -23,6 +23,13 @@ public abstract class Term
         return true;
     }
     
+    /**
+     * Produces a new instance of Term, depending on the input text.
+     * 
+     * @param text
+     * @return
+     * @throws Exception 
+     */
     public Term makeTerm(String text) throws Exception
     {
         Term term = null;

@@ -12,12 +12,13 @@ import java.util.*;
  */
 public class Convergence extends Component
 {
-    private Collection<Step> preceedingSteps;
+    private List<Step> preceedingSteps;
     private Transition succeedingTransition;
     
     public Convergence()
     {
         super(ComponentType.CONVERGENCE);
+        preceedingSteps = new ArrayList<>();
     }
     
     public void addPrecedingStep(Step step)
