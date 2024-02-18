@@ -35,8 +35,8 @@ public class SequentialFunctionChart
      * Do initialSteps trzeba tylko 'dorzucić' te kroki (referencje do już
      * istniejących), które mają być początkowo aktywne.
      */
-    private List<Component> components;
-    private List<Step> initialSteps;
+    private Collection<Component> components = new ArrayList<>();
+    private Collection<Step> initialSteps = new ArrayList<>();
 //    private Collection<Transition> transitions = new ArrayList<>();
     private Collection<String> vars = new ArrayList<>(); // you can treat it as a map -> variables in transitions
 
@@ -196,7 +196,7 @@ public class SequentialFunctionChart
     {
         if (!initialSteps.isEmpty())
         {
-            return initialSteps.get(0);
+            return initialSteps.iterator().next();
         }
         else
         {

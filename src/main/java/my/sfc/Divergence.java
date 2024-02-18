@@ -38,8 +38,6 @@ public class Divergence extends Component
     public String toString() {
         return "Divergence{" +
                 "id=" + id +
-                ", precedingTransition=" + precedingTransition +
-                ", succeedingSteps=" + succeedingSteps +
                 '}';
     }
 }

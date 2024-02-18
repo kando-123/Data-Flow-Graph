@@ -38,8 +38,6 @@ public class Convergence extends Component
     public String toString() {
         return "Convergence{" +
                 "id=" + id +
-                ", preceedingSteps=" + preceedingSteps +
-                ", succeedingTransition=" + succeedingTransition +
                 '}';
     }
 }
