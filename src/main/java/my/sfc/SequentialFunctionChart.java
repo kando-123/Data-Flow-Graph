@@ -190,6 +190,12 @@ public class SequentialFunctionChart
         {
             System.out.println(component);
         }
+
+        System.out.println("Variables:");
+        for (String var : vars)
+        {
+            System.out.println(var);
+        }
     }
 
     public Step getStartStep() throws Exception
