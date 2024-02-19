@@ -148,7 +148,7 @@ public class SequentialFunctionChart
             }
 
         }
-        Convergence convergenceToAdd = new Convergence(id);
+        Transition convergenceToAdd = new Transition(id);
         for (Integer source : sources) {
             convergenceToAdd.addPrecedingStep(new Step(source, "")); // TODO? I dont like it tbh
         }
@@ -177,9 +177,9 @@ public class SequentialFunctionChart
             }
 
         }
-        Divergence divergenceToAdd = new Divergence(id);
+        Transition divergenceToAdd = new Transition(id);
         if (source != -1) {
-            divergenceToAdd.addPrecedingTransition(new Transition(source));
+            divergenceToAdd.addPrecedingStep(new Step(source, ""));
         }
         components.add(divergenceToAdd);
     }

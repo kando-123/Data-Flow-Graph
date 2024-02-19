@@ -6,6 +6,7 @@ package my.sfc;
 
 import my.expression.Expression;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,6 +30,8 @@ public class Transition extends Component
     public Transition(int source) {
         super(ComponentType.TRANSITION);
         id = source;
+        precedingSteps = new ArrayList<>();
+        succeedingSteps = new ArrayList<>();
     }
 
     public void addPrecedingStep(Step step)
