@@ -17,4 +17,9 @@ public class OperationTerm extends Term
         super(TermType.OPERATION);
         this.operation = operation;
     }
+    
+    public Operation getOperation()
+    {
+        return operation;
+    }
 }

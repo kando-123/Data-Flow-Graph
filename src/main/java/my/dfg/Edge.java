@@ -10,12 +10,29 @@ package my.dfg;
  */
 public class Edge
 {
-    private EdgeAttribute attribute;
+    private final EdgeAttribute attribute;
     private Node tail;
     private Node head;
     
-    public Edge(/* all? just attri? */)
+    public Edge(EdgeAttribute attribute)
     {
-        
+        this.attribute = attribute;
+    }
+    
+    public void setTail(Node node)
+    {
+        tail = node;
+        tail.addOutputEdge(this);
+    }
+    
+    public void setHead(Node node)
+    {
+        head = node;
+        head.addInputEdge(this);
+    }
+    
+    public EdgeAttribute getAttribute()
+    {
+        return attribute;
     }
 }

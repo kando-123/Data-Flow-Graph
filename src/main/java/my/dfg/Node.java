@@ -24,9 +24,18 @@ public class Node
         outputEdges = new ArrayList<>();
     }
     
+    public NodeType getType()
+    {
+        return type;
+    }
+    
     public void addInputEdge(Edge edge)
     {
         inputEdges.add(edge);
-        
+    }
+    
+    public void addOutputEdge(Edge edge)
+    {
+        outputEdges.add(edge);
     }
 }

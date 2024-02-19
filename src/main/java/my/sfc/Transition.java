@@ -6,6 +6,8 @@ package my.sfc;
 
 import my.expression.Expression;
 
+import java.util.List;
+
 /**
  *
  * @author Kay Jay O'Nail
@@ -13,8 +15,8 @@ import my.expression.Expression;
 public class Transition extends Component
 {
     private final Integer id;
-    private Component precedingComponent;
-    private Component succeedingComponent;
+    private List<Step> precedingSteps;
+    private List<Step> succeedingSteps;
     private Expression condition;
     
     public Transition(Integer _id, Expression expression)
@@ -29,32 +31,20 @@ public class Transition extends Component
         id = source;
     }
 
-    public void setPrecedingStep(Step step)
+    public void addPrecedingStep(Step step)
     {
-        precedingComponent = step;
+        precedingSteps.add(step);
     }
-    
-    public void setPrecedingConvergence(Convergence convergence)
+
+    public void addSucceedingStep(Step step)
     {
-        precedingComponent = convergence;
-    }
-    
-    public void setSucceedingStep(Step step)
-    {
-        succeedingComponent = step;
-    }
-    
-    public void setSucceedingDivergence(Divergence divergence)
-    {
-        succeedingComponent = divergence;
+        succeedingSteps.add(step);
     }
 
     @Override
     public String toString() {
         return "Transition{" +
                 "id=" + id +
-                ", precedingComponent=" + precedingComponent +
-                ", succeedingComponent=" + succeedingComponent +
                 ", condition=" + condition +
                 '}';
     }

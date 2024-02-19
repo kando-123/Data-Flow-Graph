@@ -17,6 +17,11 @@ public abstract class Term
         this.type = type;
     }
     
+    public TermType getType()
+    {
+        return type;
+    }
+    
     private boolean isVariableLabel(String text)
     {
         /* Temporary! */

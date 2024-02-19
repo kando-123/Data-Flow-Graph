@@ -26,7 +26,7 @@ public class Divergence extends Component
     public void addPrecedingTransition(Transition transition)
     {
         precedingTransition = transition;
-        transition.setSucceedingDivergence(this);
+//        transition.setSucceedingDivergence(this);
     }
     
     public void setSucceedingTransition(Step step)

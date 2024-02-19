@@ -10,9 +10,9 @@ package my.expression;
  */
 public enum Operation
 {
-    NEGATION(1), // !, not
-    DISJUNCTION(2), // |, ||, or
-    CONJUNCTION(2); // &, &&, and
+    NEGATION(1), // !, not, NOT
+    DISJUNCTION(2), // |, ||, or, OR
+    CONJUNCTION(2); // &, &&, and, AND
     
     private final int arguments;
     

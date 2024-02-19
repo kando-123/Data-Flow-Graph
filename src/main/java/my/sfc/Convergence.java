@@ -31,7 +31,7 @@ public class Convergence extends Component
     public void setSucceedingTransition(Transition transition)
     {
         succeedingTransition = transition;
-        transition.setPrecedingConvergence(this);
+//        transition.setPrecedingConvergence(this);
     }
 
     @Override

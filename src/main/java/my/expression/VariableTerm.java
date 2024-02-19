@@ -18,7 +18,7 @@ public class VariableTerm extends Term
         this.label = label;
     }
     
-    protected String getLabel()
+    public String getLabel()
     {
         return label;
     }

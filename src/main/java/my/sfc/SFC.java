@@ -12,30 +12,17 @@ import java.util.*;
  */
 public class SFC
 {
-    private List<Component> components;
-    
-    /*
-     * Wszystkie kroki i inne komponenty są w components.
-     * Do initialSteps trzeba tylko 'dorzucić' te kroki (referencje do już
-     * istniejących), które mają być początkowo aktywne.
-     */
+    private List<Step> steps;
     private List<Step> initialSteps;
     
+    private List<Transition> transitions;
     
-    /* Tworząc kroki proponuję wywoływać konstruktor w następujący sposób:
-       ... = new Step("step" + Integer.toString(steps.size()))
-       w ten sposób będą ponumerowane: "step0", "step1", "step2", ...
-     */
-    
-    public Step getStartStep() throws Exception
+    public SFC()
     {
-        if (!initialSteps.isEmpty())
-        {
-            return initialSteps.get(0); 
-        }
-        else
-        {
-            throw new Exception("SFC.getFirstStep");
-        }
+        steps = new ArrayList<>();
+        initialSteps = new ArrayList<>();
+        transitions = new ArrayList<>();
     }
+    
+    
 }
