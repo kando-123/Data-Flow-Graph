@@ -24,5 +24,13 @@ public class SFC
         transitions = new ArrayList<>();
     }
     
+    public void readFromXML(String fileName) throws Exception
+    {
+        throw new Exception("Not yet implemented, dude!");
+    }
     
+    public List<Step> getSteps()
+    {
+        return Collections.unmodifiableList(steps);
+    }
 }

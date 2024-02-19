@@ -13,22 +13,23 @@ import java.util.*;
 public class Step extends Component
 {
     private Integer id;
-    private String label;
+    private String name;
 
     private final List<Transition> precedingTransitions;
     private final List<Transition> succeedingTransitions;
     
     /**
      * Constructor.
-     * @param label - label of the step
+     * @param id
+     * @param name - label of the step
      */
-    public Step(int _id, String label)
+    public Step(int id, String name)
     {
         super(ComponentType.STEP);
         precedingTransitions = new ArrayList<>();
         succeedingTransitions = new ArrayList<>();
-        id = _id;
-        this.label = label;
+        this.id = id;
+        this.name = name;
     }
 
     public void addPrecedingTransition(Transition transition)
@@ -43,14 +44,24 @@ public class Step extends Component
     
     public String getLabel()
     {
-        return label;
+        return name;
     }
-
+    
+    public List<Transition> getPrecedingTransitions()
+    {
+        return Collections.unmodifiableList(precedingTransitions);
+    }
+    
+    public List<Transition> getSucceedingTransitions()
+    {
+        return Collections.unmodifiableList(succeedingTransitions);
+    }
+    
     @Override
     public String toString() {
         return "Step{" +
                 "id=" + id +
-                ", label='" + label + '\'' +
+                ", label='" + name + '\'' +
                 '}';
     }
 }

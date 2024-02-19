@@ -6,8 +6,7 @@ package my.sfc;
 
 import my.expression.Expression;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  *
@@ -20,11 +19,11 @@ public class Transition extends Component
     private List<Step> succeedingSteps;
     private Expression condition;
     
-    public Transition(Integer _id, Expression expression)
+    public Transition(Integer id, Expression expression)
     {
         super(ComponentType.TRANSITION);
         condition = expression;
-        id = _id;
+        this.id = id;
     }
 
     public Transition(int source) {
@@ -42,6 +41,16 @@ public class Transition extends Component
     public void addSucceedingStep(Step step)
     {
         succeedingSteps.add(step);
+    }
+    
+    public Expression getCondition()
+    {
+        return condition;
+    }
+    
+    public List<Step> getPredecessors()
+    {
+        return Collections.unmodifiableList(precedingSteps);
     }
 
     @Override
