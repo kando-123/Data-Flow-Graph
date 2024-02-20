@@ -52,6 +52,11 @@ public class Transition extends Component
     {
         return Collections.unmodifiableList(precedingSteps);
     }
+    
+    public List<Step> getSuccessors()
+    {
+        return Collections.unmodifiableList(succeedingSteps);
+    }
 
     @Override
     public String toString() {

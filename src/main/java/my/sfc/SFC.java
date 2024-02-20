@@ -33,4 +33,9 @@ public class SFC
     {
         return Collections.unmodifiableList(steps);
     }
+    
+    public List<Transition> getTransitions()
+    {
+        return Collections.unmodifiableList(transitions);
+    }
 }

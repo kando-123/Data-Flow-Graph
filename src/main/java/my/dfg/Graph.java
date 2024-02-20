@@ -168,50 +168,64 @@ public class Graph
             return outputNode;
         }
     }
+    
+    class TransitionStructure
+    {
+        private Node bridgeNode;
+        
+        public TransitionStructure(Transition transition)
+        {
+            bridgeNode = new OperationNode(NodeOperation.CONJUNCTION);
+
+            Expression condition = transition.getCondition();
+            var transitionCondition = new ExpressionStructure(condition);
+            joinNodes(transitionCondition.getOutputNode(), bridgeNode);
+        }
+        
+        public Node getBridgeNode()
+        {
+            return bridgeNode;
+        }
+    }
 
     public void constructGraph(SFC sfc)
     {
+        /* Create the structures representing steps. */
         Map<Step, StepStructure> stepStructures = new HashMap<>();
         List<Step> steps = sfc.getSteps();
-
-        /* Create the structures representing steps. */
         for (var step : steps)
         {
             stepStructures.put(step, new StepStructure(step));
         }
-
-        /* Join. */
-        for (var step : steps)
+        
+        /* Create the structures representing the transitions. */
+        Map<Transition, TransitionStructure> transitionStructures = new HashMap<>();
+        List<Transition> transitions = sfc.getTransitions();
+        for (var transition : transitions)
         {
-            /* Activation condition. */
-            List<Transition> transitions = step.getPrecedingTransitions();
-            for (var transition : transitions)
+            transitionStructures.put(transition, new TransitionStructure(transition));
+        }
+
+        /*  */
+        for (var transition : transitions)
+        {
+            var transitionStr = transitionStructures.get(transition);
+            
+            /* Backward links. */
+            List<Step> precedingSteps = transition.getPredecessors();
+            for (var step : precedingSteps)
             {
-                var conjunction = new OperationNode(NodeOperation.CONJUNCTION);
-
-                Expression condition = transition.getCondition();
-                var transitionCondition = new ExpressionStructure(condition);
-                joinNodes(transitionCondition.getOutputNode(), conjunction);
-
-                List<Step> predecessors = transition.getPredecessors();
-                for (var predecessor : predecessors)
-                {
-                    var node = stepStructures.get(predecessor).getOutputNode();
-                    joinNodes(node, conjunction);
-                }
-
-                var setter = stepStructures.get(step).getSettingNode();
-                joinNodes(conjunction, setter);
+                var stepStr = stepStructures.get(step);
+                joinNodes(stepStr.getOutputNode(), transitionStr.getBridgeNode());
+                joinNodes(transitionStr.getBridgeNode(), stepStr.getClearingNode());
             }
-
-            /* Deactivation condition. */
-            transitions = step.getSucceedingTransitions();
-            Node clearer = stepStructures.get(step).getClearingNode();
-            for (var transition : transitions)
+            
+            /* Forward links. */
+            List<Step> succeedingSteps = transition.getSuccessors();
+            for (var step : succeedingSteps)
             {
-                Expression condition = transition.getCondition();
-                var transitionCondition = new ExpressionStructure(condition);
-                joinNodes(transitionCondition.getOutputNode(), clearer);
+                var stepStr = stepStructures.get(step);
+                joinNodes(transitionStr.getBridgeNode(), stepStr.getSettingNode());
             }
         }
     }
