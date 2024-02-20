@@ -33,16 +33,30 @@ public class Expression
 
         /* TODO: Extracting the text into a queue of terms representing
            the Boolean expression in Polish notation.
-           The input may contain:
-            + operations:
-              - negation: !, not, NOT;
-              - disjunction: |, ||, or, OR;
-              - conjunction: &, &&, and, AND;
-            + variables - format:
-                letter + [letter/digit/underscore]{0, 1 or many}
          */
+
+        String[] tokens = text.split(" ");
+        Queue<String> queue = new LinkedList<>(Arrays.asList(tokens));
+
+//        checking if each token is a valid term
+        while (!queue.isEmpty())
+        {
+            String token = queue.poll();
+            Term termToAdd;
+            try {
+                termToAdd = OperationTerm.makeTerm(token);
+                terms.add(termToAdd);
+            } catch (Exception e) {
+                try {
+                    termToAdd = VariableTerm.makeTerm(token);
+                    terms.add(termToAdd);
+                } catch (Exception ex) {
+                    System.out.println("Term: " + token + " is not an operation or a variable");
+                }
+            }
+        }
     }
-    
+
     public int size()
     {
         return terms.size();
@@ -51,5 +65,19 @@ public class Expression
     public Term get(int index)
     {
         return (index >= 0 && index < terms.size()) ? terms.get(index) : null;
+    }
+
+    @Override
+    public String toString()
+    {
+        StringBuilder sb = new StringBuilder();
+
+        for (Term term : terms)
+        {
+            sb.append(term.toString());
+            sb.append(" ");
+        }
+
+        return sb.toString();
     }
 }

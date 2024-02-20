@@ -96,7 +96,6 @@ public class SequentialFunctionChart
                         for (int l = 0; l < conditionChildren.item(k).getChildNodes().getLength(); l++) {
                             if (conditionChildren.item(k).getChildNodes().item(l).getNodeName().equals("ST")) {
                                 condition = conditionChildren.item(k).getChildNodes().item(l).getTextContent().trim();
-                                System.out.println("testtttt: " + condition.trim());
                             }
                         }
                     }

@@ -22,4 +22,32 @@ public class OperationTerm extends Term
     {
         return operation;
     }
+
+
+    public static Term makeTerm(String text) throws Exception {
+        Term term = null;
+
+        switch (text) {
+            case "!", "not", "NOT" -> {
+                term = new OperationTerm(Operation.NEGATION);
+            }
+            case "|", "||", "or", "OR" -> {
+                term = new OperationTerm(Operation.DISJUNCTION);
+            }
+            case "&", "&&", "and", "AND" -> {
+                term = new OperationTerm(Operation.CONJUNCTION);
+            }
+            default -> {
+                throw new Exception("Term.makeTerm");
+            }
+        }
+
+        return term;
+    }
+
+    @Override
+    public String toString()
+    {
+        return operation.toString();
+    }
 }
