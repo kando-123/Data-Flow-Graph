@@ -44,8 +44,17 @@ public class Expression
             String token = queue.poll();
             Term termToAdd;
             try {
-                termToAdd = OperationTerm.makeTerm(token);
-                terms.add(termToAdd);
+                OperationTerm temp;
+                temp = OperationTerm.makeTerm(token);
+                termToAdd = temp;
+                if(temp.getOperation().equals(Operation.CONJUNCTION) || temp.getOperation().equals(Operation.DISJUNCTION))
+                {
+                    terms.add(0, termToAdd);
+                }
+                else
+                {
+                    terms.add(termToAdd);
+                }
             } catch (Exception e) {
                 try {
                     termToAdd = VariableTerm.makeTerm(token);

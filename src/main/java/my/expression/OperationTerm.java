@@ -24,8 +24,8 @@ public class OperationTerm extends Term
     }
 
 
-    public static Term makeTerm(String text) throws Exception {
-        Term term = null;
+    public static OperationTerm makeTerm(String text) throws Exception {
+        OperationTerm term = null;
 
         switch (text) {
             case "!", "not", "NOT" -> {
