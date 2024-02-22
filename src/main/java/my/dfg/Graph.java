@@ -180,7 +180,7 @@ public class Graph
     
     class TransitionStructure
     {
-        private Node bridgeNode;
+        private final Node bridgeNode;
         
         public TransitionStructure(Transition transition)
         {
