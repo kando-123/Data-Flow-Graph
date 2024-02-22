@@ -167,6 +167,15 @@ public class Graph
         {
             return outputNode;
         }
+        
+        public String getDescription()
+        {
+            StringBuilder builder = new StringBuilder();
+            
+            
+            
+            return builder.toString();
+        }
     }
     
     class TransitionStructure
@@ -227,14 +236,6 @@ public class Graph
                 var stepStr = stepStructures.get(step);
                 joinNodes(transitionStr.getBridgeNode(), stepStr.getSettingNode());
             }
-        }
-    }
-    
-    public void $print()
-    {
-        for (var node : nodes)
-        {
-            System.out.println(node.getDescription());
         }
     }
     

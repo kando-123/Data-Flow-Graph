@@ -12,10 +12,10 @@ import java.util.*;
  */
 public class SFC
 {
-    private List<Step> steps;
-    private List<Step> initialSteps;
+    private final List<Step> steps;
+    private final List<Step> initialSteps;
     
-    private List<Transition> transitions;
+    private final List<Transition> transitions;
     
     public SFC()
     {
