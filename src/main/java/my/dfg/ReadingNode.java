@@ -17,5 +17,14 @@ public class ReadingNode extends Node
         super(NodeType.READ);
         this.label = label;
     }
-    
+
+    @Override
+    public String getDescription()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.append("[label=\"")
+                .append(label)
+                .append("\" shape=\"invhouse\"];");
+        return builder.toString();
+    }
 }

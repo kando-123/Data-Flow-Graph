@@ -11,9 +11,19 @@ package my.dfg;
 public class OperationNode extends Node
 {
     NodeOperation operation;
-    
+
     public OperationNode(NodeOperation operation)
     {
         super(NodeType.OPERATION);
+    }
+
+    @Override
+    public String getDescription()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.append("[label=\"")
+                .append(operation == NodeOperation.DISJUNCTION ? "OR" : "AND")
+                .append("\" shape=\"circle\"];");
+        return builder.toString();
     }
 }

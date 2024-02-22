@@ -206,7 +206,7 @@ public class Graph
             transitionStructures.put(transition, new TransitionStructure(transition));
         }
 
-        /*  */
+        /* Join! */
         for (var transition : transitions)
         {
             var transitionStr = transitionStructures.get(transition);
@@ -228,5 +228,25 @@ public class Graph
                 joinNodes(transitionStr.getBridgeNode(), stepStr.getSettingNode());
             }
         }
+    }
+    
+    public void $print()
+    {
+        for (var node : nodes)
+        {
+            System.out.println(node.getDescription());
+        }
+    }
+    
+    private String graphVizDescription;
+    
+    public String getDescription()
+    {
+        if (graphVizDescription.equals(""))
+        {
+            
+        }
+        
+        return graphVizDescription;
     }
 }

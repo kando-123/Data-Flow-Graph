@@ -10,7 +10,7 @@ import java.util.*;
  *
  * @author Kay Jay O'Nail
  */
-public class Node
+abstract public class Node
 {
     private NodeType type;
     
@@ -38,4 +38,6 @@ public class Node
     {
         outputEdges.add(edge);
     }
+    
+    abstract public String getDescription();
 }

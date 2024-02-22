@@ -17,4 +17,14 @@ public class WritingNode extends Node
         super(NodeType.WRITE);
         this.label = label;
     }
+
+    @Override
+    public String getDescription()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.append("[label=\"")
+                .append(label)
+                .append("\" shape=\"house\"];");
+        return builder.toString();
+    }
 }
