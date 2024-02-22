@@ -23,7 +23,7 @@ public class OperationNode extends Node
         StringBuilder builder = new StringBuilder();
         builder.append("[label=\"")
                 .append(operation == NodeOperation.DISJUNCTION ? "OR" : "AND")
-                .append("\" shape=\"circle\"];");
+                .append("\" shape=\"oval\"];");
         return builder.toString();
     }
 }

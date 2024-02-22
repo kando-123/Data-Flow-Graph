@@ -36,11 +36,127 @@ public class Graph
         joinNodes(tail, head, EdgeAttribute.SIMPLE);
     }
 
-    class ExpressionStructure
+    private class StepStructure
+    {
+        private final Node settingNode;
+        private final Node clearingNode;
+        private final Node outputNode;
+
+        private final String description;
+        private final String stepLabel;
+
+        public StepStructure(Step step)
+        {
+            stepLabel = step.getLabel();
+            settingNode = new OperationNode(NodeOperation.DISJUNCTION);
+            clearingNode = new OperationNode(NodeOperation.CONJUNCTION);
+            outputNode = new OperationNode(NodeOperation.DISJUNCTION);
+            Node internal = new OperationNode(NodeOperation.CONJUNCTION);
+            Node getter = new ReadingNode(stepLabel);
+            Node setter = new WritingNode(stepLabel);
+            nodes.add(settingNode);
+            nodes.add(internal);
+            nodes.add(clearingNode);
+            nodes.add(outputNode);
+            nodes.add(getter);
+            nodes.add(setter);
+            joinNodes(settingNode, internal, EdgeAttribute.SIMPLE);
+            joinNodes(internal, outputNode, EdgeAttribute.SIMPLE);
+            joinNodes(clearingNode, outputNode, EdgeAttribute.SIMPLE);
+            joinNodes(getter, internal, EdgeAttribute.NEGATION);
+            joinNodes(getter, clearingNode, EdgeAttribute.SIMPLE);
+            joinNodes(outputNode, setter, EdgeAttribute.SIMPLE);
+            StringBuilder builder = new StringBuilder();
+            builder.append("subgraph ")
+                    .append(stepLabel)
+                    .append("\n");
+            builder.append("{\n");
+            builder.append("node [style=\"filled\", color=\"")
+                    .append(PastelColor.getNextColor().toString())
+                    .append("\"];\n");
+            builder.append(stepLabel)
+                    .append("_Set ")
+                    .append(settingNode.getDescription())
+                    .append(";\n");
+            builder.append(stepLabel)
+                    .append("_Clear ")
+                    .append(clearingNode.getDescription())
+                    .append(";\n");
+            builder.append(stepLabel)
+                    .append("_Output ")
+                    .append(outputNode.getDescription())
+                    .append(";\n");
+            builder.append(stepLabel)
+                    .append("_Internal ")
+                    .append(internal.getDescription())
+                    .append(";\n");
+            builder.append(stepLabel)
+                    .append("_Read ")
+                    .append(getter.getDescription())
+                    .append(";\n");
+            builder.append(stepLabel)
+                    .append("_Write ")
+                    .append(setter.getDescription())
+                    .append(";\n");
+            builder.append(stepLabel)
+                    .append("_Set -> ")
+                    .append(stepLabel)
+                    .append("_Internal -> ")
+                    .append(stepLabel)
+                    .append("_Output;\n");
+            builder.append(stepLabel)
+                    .append("_Clear -> ")
+                    .append(stepLabel)
+                    .append("_Output;\n");
+            builder.append(stepLabel)
+                    .append("_Read -> ")
+                    .append(stepLabel)
+                    .append("_Clear;\n");
+            builder.append(stepLabel)
+                    .append("_Read -> ")
+                    .append(stepLabel)
+                    .append("_Internal [arrowhead=\"odot\";\n");
+            builder.append(stepLabel)
+                    .append("_Output -> ")
+                    .append(stepLabel)
+                    .append("_Write;\n");
+            builder.append("}\n");
+            description = builder.toString();
+        }
+
+        public Node getSettingNode()
+        {
+            return settingNode;
+        }
+
+        public Node getClearingNode()
+        {
+            return clearingNode;
+        }
+
+        public Node getOutputNode()
+        {
+            return outputNode;
+        }
+
+        public String getDescription()
+        {
+            return description;
+        }
+        
+        public String getLabel()
+        {
+            return stepLabel;
+        }
+    }
+    
+    private class ExpressionStructure
     {
         private Node outputNode;
+        
+        private String description;
 
-        class Element
+        private class Element
         {
             private final Node node;
             private int counter;
@@ -63,12 +179,17 @@ public class Graph
             }
         }
 
-        public ExpressionStructure(Expression expression)
+        public ExpressionStructure(Expression expression, int index)
         {
             outputNode = null;
             Term term;
             EdgeAttribute attribute = EdgeAttribute.SIMPLE;
             Stack<Element> stack = new Stack<>();
+            StringBuilder builder = new StringBuilder();
+            builder.append("subgraph C")
+                    .append(index)
+                    .append("\n");
+            builder.append("{\n");
             for (int i = 0; i < expression.size(); ++i)
             {
                 term = expression.get(i);
@@ -85,6 +206,7 @@ public class Graph
                     {
                         node = new OperationNode(operation == Operation.DISJUNCTION
                                 ? NodeOperation.DISJUNCTION : NodeOperation.CONJUNCTION);
+                        
                         if (!stack.isEmpty())
                         {
                             joinNodes(node, stack.peek().useNode(), attribute);
@@ -117,50 +239,8 @@ public class Graph
                     outputNode = node;
                 }
             }
-        }
-
-        public Node getOutputNode()
-        {
-            return outputNode;
-        }
-    }
-
-    class StepStructure
-    {
-        private final Node settingNode;
-        private final Node clearingNode;
-        private final Node outputNode;
-
-        public StepStructure(Step step)
-        {
-            settingNode = new OperationNode(NodeOperation.DISJUNCTION);
-            clearingNode = new OperationNode(NodeOperation.CONJUNCTION);
-            outputNode = new OperationNode(NodeOperation.DISJUNCTION);
-            Node conjunction = new OperationNode(NodeOperation.CONJUNCTION);
-            Node getter = new ReadingNode(step.getLabel() + ".token");
-            Node setter = new WritingNode(step.getLabel() + ".token");
-            nodes.add(settingNode);
-            nodes.add(conjunction);
-            nodes.add(clearingNode);
-            nodes.add(outputNode);
-            nodes.add(getter);
-            nodes.add(setter);
-            joinNodes(settingNode, conjunction, EdgeAttribute.SIMPLE);
-            joinNodes(conjunction, outputNode, EdgeAttribute.SIMPLE);
-            joinNodes(clearingNode, outputNode, EdgeAttribute.SIMPLE);
-            joinNodes(getter, conjunction, EdgeAttribute.NEGATION);
-            joinNodes(getter, clearingNode, EdgeAttribute.SIMPLE);
-            joinNodes(outputNode, setter, EdgeAttribute.SIMPLE);
-        }
-
-        public Node getSettingNode()
-        {
-            return settingNode;
-        }
-
-        public Node getClearingNode()
-        {
-            return clearingNode;
+            builder.append("}\n");
+            description = builder.toString();
         }
 
         public Node getOutputNode()
@@ -170,32 +250,61 @@ public class Graph
         
         public String getDescription()
         {
-            StringBuilder builder = new StringBuilder();
-            
-            
-            
-            return builder.toString();
+            return description;
         }
     }
-    
-    class TransitionStructure
+
+    private class TransitionStructure
     {
         private final Node bridgeNode;
         
-        public TransitionStructure(Transition transition)
-        {
-            bridgeNode = new OperationNode(NodeOperation.CONJUNCTION);
+        private String description;
+        private String transitionLabel;
 
+        public TransitionStructure(Transition transition, int index)
+        {
+            transitionLabel = String.format("T%d", index);
+            
+            bridgeNode = new OperationNode(NodeOperation.CONJUNCTION);
             Expression condition = transition.getCondition();
-            var transitionCondition = new ExpressionStructure(condition);
+            var transitionCondition = new ExpressionStructure(condition, index);
             joinNodes(transitionCondition.getOutputNode(), bridgeNode);
+            
+            StringBuilder builder = new StringBuilder();
+            builder.append("subgraph ")
+                    .append(transitionLabel)
+                    .append("\n");
+            builder.append("{\n");
+            builder.append("node [style=\"filled\" color=\"lightgrey\"];\n");
+            builder.append(transitionLabel)
+                    .append("_Bridge ")
+                    .append(bridgeNode.getDescription())
+                    .append(";\n");
+            builder.append(transitionCondition.getDescription())
+                    .append("\n");
+            builder.append("C")
+                    .append(index)
+                    .append("_N")
+                    .append(index)
+                    .append(" -> ")
+                    .append(transitionLabel)
+                    .append("_Bridge;\n")
+                    .append("}\n");
+            description = builder.toString();
         }
-        
+
         public Node getBridgeNode()
         {
             return bridgeNode;
         }
+        
+        public String getDescription()
+        {
+            return description;
+        }
     }
+
+    private String graphVizDescription;
 
     public void constructGraph(SFC sfc)
     {
@@ -206,20 +315,22 @@ public class Graph
         {
             stepStructures.put(step, new StepStructure(step));
         }
-        
+
         /* Create the structures representing the transitions. */
         Map<Transition, TransitionStructure> transitionStructures = new HashMap<>();
         List<Transition> transitions = sfc.getTransitions();
+        int index = 0;
         for (var transition : transitions)
         {
-            transitionStructures.put(transition, new TransitionStructure(transition));
+            transitionStructures.put(transition,
+                    new TransitionStructure(transition, index++));
         }
 
         /* Join! */
         for (var transition : transitions)
         {
             var transitionStr = transitionStructures.get(transition);
-            
+
             /* Backward links. */
             List<Step> precedingSteps = transition.getPredecessors();
             for (var step : precedingSteps)
@@ -228,7 +339,7 @@ public class Graph
                 joinNodes(stepStr.getOutputNode(), transitionStr.getBridgeNode());
                 joinNodes(transitionStr.getBridgeNode(), stepStr.getClearingNode());
             }
-            
+
             /* Forward links. */
             List<Step> succeedingSteps = transition.getSuccessors();
             for (var step : succeedingSteps)
@@ -238,16 +349,9 @@ public class Graph
             }
         }
     }
-    
-    private String graphVizDescription;
-    
+
     public String getDescription()
     {
-        if (graphVizDescription.equals(""))
-        {
-            
-        }
-        
         return graphVizDescription;
     }
 }
