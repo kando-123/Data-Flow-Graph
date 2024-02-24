@@ -24,7 +24,7 @@ public class WritingNode extends Node
         StringBuilder builder = new StringBuilder();
         builder.append("[label=\"")
                 .append(label)
-                .append("\" shape=\"house\"];");
+                .append("\" shape=\"house\"]");
         return builder.toString();
     }
 }

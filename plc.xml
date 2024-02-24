@@ -214,7 +214,7 @@
               <condition>
                 <inline name="">
                   <ST>
-                    <xhtml:p><![CDATA[not E0 and not E1]]></xhtml:p>
+                    <xhtml:p><![CDATA[and not E0 not E1]]></xhtml:p>
                   </ST>
                 </inline>
               </condition>

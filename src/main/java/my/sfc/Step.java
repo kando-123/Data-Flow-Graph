@@ -10,26 +10,18 @@ import java.util.*;
  *
  * @author Kay Jay O'Nail
  */
-public class Step extends Component
+public class Step
 {
-    private Integer id;
     private String name;
 
     private final List<Transition> precedingTransitions;
     private final List<Transition> succeedingTransitions;
-    
-    /**
-     * Constructor.
-     * @param id
-     * @param name - label of the step
-     */
-    public Step(int id, String name)
+
+    public Step(String name)
     {
-        super(ComponentType.STEP);
+        this.name = name;
         precedingTransitions = new ArrayList<>();
         succeedingTransitions = new ArrayList<>();
-        this.id = id;
-        this.name = name;
     }
 
     public void addPrecedingTransition(Transition transition)
@@ -41,27 +33,19 @@ public class Step extends Component
     {
         succeedingTransitions.add(transition);
     }
-    
+
     public String getLabel()
     {
         return name;
     }
-    
+
     public List<Transition> getPrecedingTransitions()
     {
         return Collections.unmodifiableList(precedingTransitions);
     }
-    
+
     public List<Transition> getSucceedingTransitions()
     {
         return Collections.unmodifiableList(succeedingTransitions);
-    }
-    
-    @Override
-    public String toString() {
-        return "Step{" +
-                "id=" + id +
-                ", label='" + name + '\'' +
-                '}';
     }
 }

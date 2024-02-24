@@ -10,19 +10,7 @@ package my.expression;
  */
 public enum Operation
 {
-    NEGATION(1), // !, not, NOT
-    DISJUNCTION(2), // |, ||, or, OR
-    CONJUNCTION(2); // &, &&, and, AND
-    
-    private final int arguments;
-    
-    private Operation(int args)
-    {
-        arguments = args;
-    }
-    
-    public int getArgumentsCount()
-    {
-        return arguments;
-    }
+    NEGATION,
+    DISJUNCTION,
+    CONJUNCTION
 }

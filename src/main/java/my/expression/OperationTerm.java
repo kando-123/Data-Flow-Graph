@@ -10,7 +10,7 @@ package my.expression;
  */
 public class OperationTerm extends Term
 {
-    private Operation operation;
+    Operation operation;
     
     protected OperationTerm(Operation operation)
     {
@@ -22,32 +22,10 @@ public class OperationTerm extends Term
     {
         return operation;
     }
-
-
-    public static OperationTerm makeTerm(String text) throws Exception {
-        OperationTerm term = null;
-
-        switch (text) {
-            case "!", "not", "NOT" -> {
-                term = new OperationTerm(Operation.NEGATION);
-            }
-            case "|", "||", "or", "OR" -> {
-                term = new OperationTerm(Operation.DISJUNCTION);
-            }
-            case "&", "&&", "and", "AND" -> {
-                term = new OperationTerm(Operation.CONJUNCTION);
-            }
-            default -> {
-                throw new Exception("Term.makeTerm");
-            }
-        }
-
-        return term;
-    }
-
+    
     @Override
     public String toString()
     {
-        return operation.toString();
+        return String.format("[%s]", operation.name());
     }
 }

@@ -24,7 +24,7 @@ public class ReadingNode extends Node
         StringBuilder builder = new StringBuilder();
         builder.append("[label=\"")
                 .append(label)
-                .append("\" shape=\"invhouse\"];");
+                .append("\" shape=\"invhouse\"]");
         return builder.toString();
     }
 }

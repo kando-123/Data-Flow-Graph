@@ -5,30 +5,21 @@
 package my.sfc;
 
 import my.expression.Expression;
-
 import java.util.*;
 
 /**
  *
  * @author Kay Jay O'Nail
  */
-public class Transition extends Component
+public class Transition
 {
-    private final Integer id;
     private List<Step> precedingSteps;
     private List<Step> succeedingSteps;
     private Expression condition;
-    
-    public Transition(Integer id, Expression expression)
-    {
-        super(ComponentType.TRANSITION);
-        condition = expression;
-        this.id = id;
-    }
 
-    public Transition(int source) {
-        super(ComponentType.TRANSITION);
-        id = source;
+    public Transition(Expression condition)
+    {
+        this.condition = condition;
         precedingSteps = new ArrayList<>();
         succeedingSteps = new ArrayList<>();
     }
@@ -42,27 +33,24 @@ public class Transition extends Component
     {
         succeedingSteps.add(step);
     }
-    
+
     public Expression getCondition()
     {
         return condition;
     }
-    
+
     public List<Step> getPredecessors()
     {
         return Collections.unmodifiableList(precedingSteps);
     }
-    
+
     public List<Step> getSuccessors()
     {
         return Collections.unmodifiableList(succeedingSteps);
     }
-
-    @Override
-    public String toString() {
-        return "Transition{" +
-                "id=" + id +
-                ", condition=" + condition +
-                '}';
+    
+    public String toString()
+    {
+        return condition.toString();
     }
 }

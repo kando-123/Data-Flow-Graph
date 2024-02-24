@@ -7,86 +7,83 @@ package my.expression;
 import java.util.*;
 
 /**
- *
+ * 
  * @author Kay Jay O'Nail
  */
 public class Expression
 {
     private List<Term> terms;
-
-    /**
-     * Constructor.
-     *
-     * Explanation by example:
-     *
-     * text: "not E1 and not E2" intermediate form (Polish notation): and, not,
-     * E1, not, E2 final form: Expression.terms = List{Term("and"), Term("not"),
-     * Term("E1"), Term("not"), Term("E2")}. Use makeTerm to instantiate the
-     * terms.
-     *
-     * @param text
-     * @throws Exception if text does not represent a valid expression
-     */
+    
     public Expression(String text) throws Exception
     {
         terms = new ArrayList<>();
-
-        /* TODO: Extracting the text into a queue of terms representing
-           the Boolean expression in Polish notation.
-         */
-
-        String[] tokens = text.split(" ");
-        Queue<String> queue = new LinkedList<>(Arrays.asList(tokens));
-
-//        checking if each token is a valid term
-        while (!queue.isEmpty())
+        
+        String[] pieces = text.split(" ");
+        
+        int counter = 1;
+        for (var piece : pieces)
         {
-            String token = queue.poll();
-            Term termToAdd;
-            try {
-                OperationTerm temp;
-                temp = OperationTerm.makeTerm(token);
-                termToAdd = temp;
-                if(temp.getOperation().equals(Operation.CONJUNCTION) || temp.getOperation().equals(Operation.DISJUNCTION))
+            Term term = Term.makeTerm(piece);
+            if (term != null)
+            {
+                terms.add(term);
+            }
+            else
+            {
+                throw new Exception("Expression.<init>");
+            }
+            
+            if (counter == 0)
+            {
+                throw new Exception("Expression.<init>");
+            }
+            switch (term.getType())
+            {
+                case VARIABLE ->
                 {
-                    terms.add(0, termToAdd);
+                    --counter;
                 }
-                else
+                case OPERATION ->
                 {
-                    terms.add(termToAdd);
-                }
-            } catch (Exception e) {
-                try {
-                    termToAdd = VariableTerm.makeTerm(token);
-                    terms.add(termToAdd);
-                } catch (Exception ex) {
-                    System.out.println("Term: " + token + " is not an operation or a variable");
+                    OperationTerm operator = (OperationTerm) term;
+                    if (operator.getOperation() != Operation.NEGATION)
+                    {
+                        ++counter;
+                    }
                 }
             }
         }
+        if (counter > 0)
+        {
+            throw new Exception("Expression.<init>");
+        }
     }
-
-    public int size()
+    
+    public int termsCount()
     {
         return terms.size();
     }
-
-    public Term get(int index)
+    
+    public Term getTerm(int index)
     {
-        return (index >= 0 && index < terms.size()) ? terms.get(index) : null;
+        return index >= 0 && index < terms.size() ? terms.get(index) : null;
     }
-
+    
     @Override
     public String toString()
     {
-        StringBuilder sb = new StringBuilder();
-
-        for (Term term : terms)
+        StringBuilder result = new StringBuilder();
+        if (terms.isEmpty())
         {
-            sb.append(term.toString());
-            sb.append(" ");
+            result.append("<empty>");
         }
-
-        return sb.toString();
+        else
+        {
+            for (var term : terms)
+            {
+                result.append(term.toString()).append(" ");
+            }
+        }
+        return result.toString();
     }
 }

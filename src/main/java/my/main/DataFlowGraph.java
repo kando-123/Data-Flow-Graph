@@ -3,7 +3,8 @@
  */
 package my.main;
 
-import my.sfc.SequentialFunctionChart;
+import my.dfg.Graph;
+import my.sfc.SFC;
 
 /**
  *
@@ -13,14 +14,16 @@ public class DataFlowGraph
 {
     public static void main(String[] args)
     {
-        try {
-//            Extractor ex = new Extractor("plc.xml");
-//            ex.getTextFromFile();
-//            ex.printTerms();
-            SequentialFunctionChart sfc = new SequentialFunctionChart();
+        SFC sfc = new SFC();
+        try
+        {
             sfc.readFromXML("plc.xml");
-            sfc.printSFC();
-        } catch (Exception e) {
+            Graph dfg = new Graph();
+            dfg.constructGraph(sfc);
+            System.out.println(dfg.toString());
+        }
+        catch (Exception e)
+        {
             System.err.println(e.getMessage());
         }
     }

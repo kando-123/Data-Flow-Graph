@@ -139,7 +139,7 @@ public class Graph
             builder.append(stepLabel)
                     .append("_Read -> ")
                     .append(stepLabel)
-                    .append("_Internal [arrowhead=\"odot\";\n");
+                    .append("_Internal [arrowhead=\"odot\"];\n");
             builder.append(stepLabel)
                     .append("_Output -> ")
                     .append(stepLabel)
@@ -244,9 +244,9 @@ public class Graph
             int nodeCounter = 0;
             
             /* Recreating the expression as a graph. */
-            for (int i = 0; i < expression.size(); ++i)
+            for (int i = 0; i < expression.termsCount(); ++i)
             {
-                term = expression.get(i);
+                term = expression.getTerm(i);
                 
                 /* Create a node to represent the term
                    and incorporate it into the graph and into the description. */
@@ -464,7 +464,7 @@ public class Graph
         StringBuilder builder = new StringBuilder();
         
         // Header.
-        builder.append("graph DFG\n");
+        builder.append("digraph DFG\n");
         
         // Opening brace.
         builder.append("{\n");
@@ -472,7 +472,7 @@ public class Graph
         /* Create the structures representing steps. */
         Map<Step, StepStructure> stepStructures = new HashMap<>();
         List<Step> steps = sfc.getSteps();
-        builder.append("/* Steps */");
+        builder.append("/* Steps */\n");
         for (var step : steps)
         {
             StepStructure structure = new StepStructure(step);
@@ -486,7 +486,7 @@ public class Graph
         Map<Transition, TransitionStructure> transitionStructures = new HashMap<>();
         List<Transition> transitions = sfc.getTransitions();
         int index = 0;
-        builder.append("/* Transitions */");
+        builder.append("/* Transitions */\n");
         for (var transition : transitions)
         {
             TransitionStructure structure = new TransitionStructure(transition, index++);
@@ -497,7 +497,7 @@ public class Graph
         }
 
         /* Join! */
-        builder.append("/* Connections */");
+        builder.append("/* Connections */\n");
         for (var transition : transitions)
         {
             var transitionStr = transitionStructures.get(transition);
@@ -540,7 +540,8 @@ public class Graph
         graphVizDescription = builder.toString();
     }
 
-    public String getDescription()
+    @Override
+    public String toString()
     {
         return graphVizDescription;
     }

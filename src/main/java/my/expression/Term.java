@@ -4,22 +4,45 @@
  */
 package my.expression;
 
+import java.util.regex.Pattern;
+
 /**
+ *
  * @author Kay Jay O'Nail
  */
-public abstract class Term {
-    private final TermType type;
-
-    protected Term(TermType type) {
+abstract public class Term
+{
+    private TermType type;
+    
+    protected Term(TermType type)
+    {
         this.type = type;
     }
-
-    public TermType getType() {
+    
+    public TermType getType()
+    {
         return type;
     }
-
-    private boolean isVariableLabel(String text) {
-        /* Temporary! */
-        return true;
+    
+    private static boolean isVariable(String text)
+    {
+        return Pattern.matches("[a-zA-Z][a-zA-Z0-9_]*", text);
+    }
+    
+    public static Term makeTerm(String text)
+    {
+        Term term;
+        switch (text)
+        {
+            case "not", "NOT" ->
+                term = new OperationTerm(Operation.NEGATION);
+            case "or", "OR" ->
+                term = new OperationTerm(Operation.DISJUNCTION);
+            case "and", "AND" ->
+                term = new OperationTerm(Operation.CONJUNCTION);
+            default ->
+                term = isVariable(text) ? new VariableTerm(text) : null;
+        }
+        return term;
     }
 }
