@@ -15,8 +15,8 @@ import java.util.*;
 public class Transition extends Component
 {
     private final Integer id;
-    private List<Step> precedingSteps;
-    private List<Step> succeedingSteps;
+    private List<Integer> precedingSteps = new ArrayList<>();
+    private List<Integer> succeedingSteps = new ArrayList<>();
     private Expression condition;
     
     public Transition(Integer id, Expression expression)
@@ -33,12 +33,12 @@ public class Transition extends Component
         succeedingSteps = new ArrayList<>();
     }
 
-    public void addPrecedingStep(Step step)
+    public void addPrecedingStep(Integer step)
     {
         precedingSteps.add(step);
     }
 
-    public void addSucceedingStep(Step step)
+    public void addSucceedingStep(Integer step)
     {
         succeedingSteps.add(step);
     }
@@ -48,12 +48,12 @@ public class Transition extends Component
         return condition;
     }
     
-    public List<Step> getPredecessors()
+    public List<Integer> getPredecessors()
     {
         return Collections.unmodifiableList(precedingSteps);
     }
     
-    public List<Step> getSuccessors()
+    public List<Integer> getSuccessors()
     {
         return Collections.unmodifiableList(succeedingSteps);
     }
@@ -63,6 +63,8 @@ public class Transition extends Component
         return "Transition{" +
                 "id=" + id +
                 ", condition=" + condition +
+                ", precedingSteps=" + precedingSteps +
+                ", succeedingSteps=" + succeedingSteps +
                 '}';
     }
 }

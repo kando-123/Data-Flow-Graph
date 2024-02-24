@@ -458,87 +458,87 @@ public class Graph
 
     private String graphVizDescription;
 
-    public void constructGraph(SFC sfc)
-    {
-        /* Create the description during creation. */
-        StringBuilder builder = new StringBuilder();
-        
-        // Header.
-        builder.append("graph DFG\n");
-        
-        // Opening brace.
-        builder.append("{\n");
-        
-        /* Create the structures representing steps. */
-        Map<Step, StepStructure> stepStructures = new HashMap<>();
-        List<Step> steps = sfc.getSteps();
-        builder.append("/* Steps */");
-        for (var step : steps)
-        {
-            StepStructure structure = new StepStructure(step);
-            stepStructures.put(step, structure);
-            
-            // Append the description of the step structure.
-            builder.append(structure.getDescription()).append("\n");
-        }
-
-        /* Create the structures representing the transitions. */
-        Map<Transition, TransitionStructure> transitionStructures = new HashMap<>();
-        List<Transition> transitions = sfc.getTransitions();
-        int index = 0;
-        builder.append("/* Transitions */");
-        for (var transition : transitions)
-        {
-            TransitionStructure structure = new TransitionStructure(transition, index++);
-            transitionStructures.put(transition, structure);
-            
-            // Append the structure of the transition.
-            builder.append(structure.getDescription());
-        }
-
-        /* Join! */
-        builder.append("/* Connections */");
-        for (var transition : transitions)
-        {
-            var transitionStr = transitionStructures.get(transition);
-
-            /* Backward links. */
-            List<Step> precedingSteps = transition.getPredecessors();
-            for (var step : precedingSteps)
-            {
-                var stepStr = stepStructures.get(step);
-                joinNodes(stepStr.getOutputNode(), transitionStr.getBridgeNode());
-                joinNodes(transitionStr.getBridgeNode(), stepStr.getClearingNode());
-                
-                // Define those connections in the description.
-                builder.append(stepStr.getLabel())
-                        .append("_Output -> ")
-                        .append(transitionStr.getLabel())
-                        .append("_Bridge;\n");
-                builder.append(transitionStr.getLabel())
-                        .append("_Bridge -> ")
-                        .append(stepStr.getLabel())
-                        .append("_Clear;\n");
-            }
-
-            /* Forward links. */
-            List<Step> succeedingSteps = transition.getSuccessors();
-            for (var step : succeedingSteps)
-            {
-                var stepStr = stepStructures.get(step);
-                joinNodes(transitionStr.getBridgeNode(), stepStr.getSettingNode());
-                
-                // Define that connection in the description.
-                builder.append(transitionStr.getLabel())
-                        .append("_Bridge -> ")
-                        .append(stepStr.getLabel())
-                        .append("_Set;\n");
-            }
-        }
-        
-        builder.append("}\n");
-        graphVizDescription = builder.toString();
-    }
+//    public void constructGraph(SFC sfc)
+//    {
+//        /* Create the description during creation. */
+//        StringBuilder builder = new StringBuilder();
+//
+//        // Header.
+//        builder.append("graph DFG\n");
+//
+//        // Opening brace.
+//        builder.append("{\n");
+//
+//        /* Create the structures representing steps. */
+//        Map<Step, StepStructure> stepStructures = new HashMap<>();
+//        List<Step> steps = sfc.getSteps();
+//        builder.append("/* Steps */");
+//        for (var step : steps)
+//        {
+//            StepStructure structure = new StepStructure(step);
+//            stepStructures.put(step, structure);
+//
+//            // Append the description of the step structure.
+//            builder.append(structure.getDescription()).append("\n");
+//        }
+//
+//        /* Create the structures representing the transitions. */
+//        Map<Transition, TransitionStructure> transitionStructures = new HashMap<>();
+//        List<Transition> transitions = sfc.getTransitions();
+//        int index = 0;
+//        builder.append("/* Transitions */");
+//        for (var transition : transitions)
+//        {
+//            TransitionStructure structure = new TransitionStructure(transition, index++);
+//            transitionStructures.put(transition, structure);
+//
+//            // Append the structure of the transition.
+//            builder.append(structure.getDescription());
+//        }
+//
+//        /* Join! */
+//        builder.append("/* Connections */");
+//        for (var transition : transitions)
+//        {
+//            var transitionStr = transitionStructures.get(transition);
+//
+//            /* Backward links. */
+//            List<Step> precedingSteps = transition.getPredecessors();
+//            for (var step : precedingSteps)
+//            {
+//                var stepStr = stepStructures.get(step);
+//                joinNodes(stepStr.getOutputNode(), transitionStr.getBridgeNode());
+//                joinNodes(transitionStr.getBridgeNode(), stepStr.getClearingNode());
+//
+//                // Define those connections in the description.
+//                builder.append(stepStr.getLabel())
+//                        .append("_Output -> ")
+//                        .append(transitionStr.getLabel())
+//                        .append("_Bridge;\n");
+//                builder.append(transitionStr.getLabel())
+//                        .append("_Bridge -> ")
+//                        .append(stepStr.getLabel())
+//                        .append("_Clear;\n");
+//            }
+//
+//            /* Forward links. */
+//            List<Step> succeedingSteps = transition.getSuccessors();
+//            for (var step : succeedingSteps)
+//            {
+//                var stepStr = stepStructures.get(step);
+//                joinNodes(transitionStr.getBridgeNode(), stepStr.getSettingNode());
+//
+//                // Define that connection in the description.
+//                builder.append(transitionStr.getLabel())
+//                        .append("_Bridge -> ")
+//                        .append(stepStr.getLabel())
+//                        .append("_Set;\n");
+//            }
+//        }
+//
+//        builder.append("}\n");
+//        graphVizDescription = builder.toString();
+//    }
 
     public String getDescription()
     {

@@ -104,7 +104,9 @@ public class SequentialFunctionChart
         }
         Expression expCondition = new Expression(condition);
         Transition transitionToAdd = new Transition(id, expCondition);
-//        transitionToAdd.setPrecedingStep(source);
+        if (source != -1) {
+            transitionToAdd.addPrecedingStep(source);
+        }
         components.add(transitionToAdd);
     }
 
@@ -149,7 +151,7 @@ public class SequentialFunctionChart
         }
         Transition convergenceToAdd = new Transition(id);
         for (Integer source : sources) {
-            convergenceToAdd.addPrecedingStep(new Step(source, "")); // TODO? I dont like it tbh
+            convergenceToAdd.addPrecedingStep(source);
         }
         components.add(convergenceToAdd);
     }
@@ -178,7 +180,7 @@ public class SequentialFunctionChart
         }
         Transition divergenceToAdd = new Transition(id);
         if (source != -1) {
-            divergenceToAdd.addPrecedingStep(new Step(source, ""));
+            divergenceToAdd.addPrecedingStep(source);
         }
         components.add(divergenceToAdd);
     }

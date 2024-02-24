@@ -15,8 +15,8 @@ public class Step extends Component
     private Integer id;
     private String name;
 
-    private final List<Transition> precedingTransitions;
-    private final List<Transition> succeedingTransitions;
+    private final List<Integer> precedingTransitions = new ArrayList<>();
+    private final List<Integer> succeedingTransitions = new ArrayList<>();
     
     /**
      * Constructor.
@@ -26,18 +26,16 @@ public class Step extends Component
     public Step(int id, String name)
     {
         super(ComponentType.STEP);
-        precedingTransitions = new ArrayList<>();
-        succeedingTransitions = new ArrayList<>();
         this.id = id;
         this.name = name;
     }
 
-    public void addPrecedingTransition(Transition transition)
+    public void addPrecedingTransition(Integer transition)
     {
         precedingTransitions.add(transition);
     }
 
-    public void addSucceedingTransition(Transition transition) throws Exception
+    public void addSucceedingTransition(Integer transition) throws Exception
     {
         succeedingTransitions.add(transition);
     }
@@ -47,12 +45,12 @@ public class Step extends Component
         return name;
     }
     
-    public List<Transition> getPrecedingTransitions()
+    public List<Integer> getPrecedingTransitions()
     {
         return Collections.unmodifiableList(precedingTransitions);
     }
     
-    public List<Transition> getSucceedingTransitions()
+    public List<Integer> getSucceedingTransitions()
     {
         return Collections.unmodifiableList(succeedingTransitions);
     }
@@ -62,6 +60,8 @@ public class Step extends Component
         return "Step{" +
                 "id=" + id +
                 ", label='" + name + '\'' +
+                ", precedingTransitions=" + precedingTransitions +
+                ", succeedingTransitions=" + succeedingTransitions +
                 '}';
     }
 }
