@@ -12,6 +12,20 @@ import java.util.*;
  */
 public class Expression
 {
+//    public static void main(String[] args)
+//    {
+//        try
+//        {
+//            Expression expression = new Expression("");
+//            System.out.println(expression.toString());
+//        }
+//        catch (Exception e)
+//        {
+//            System.err.println(e.getMessage());
+//        }
+//        
+//    }
+    
     private List<Term> terms;
     
     public Expression(String text) throws Exception
