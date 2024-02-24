@@ -43,14 +43,15 @@ public class Transition
     {
         return Collections.unmodifiableList(precedingSteps);
     }
-
+    
     public List<Step> getSuccessors()
     {
         return Collections.unmodifiableList(succeedingSteps);
     }
-    
+
     public String toString()
     {
         return condition.toString();
     }
 }
+    

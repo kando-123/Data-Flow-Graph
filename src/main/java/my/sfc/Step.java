@@ -29,7 +29,7 @@ public class Step
         precedingTransitions.add(transition);
     }
 
-    public void addSucceedingTransition(Transition transition) throws Exception
+    public void addSucceedingTransition(Transition transition)
     {
         succeedingTransitions.add(transition);
     }
