@@ -19,7 +19,7 @@ public enum PastelColor
     BLUE("#9999FF"),
     MAGENTA("#FF99FF"),
     
-    ORANGE("FFCC99"),
+    ORANGE("#FFCC99"),
     LIME("#CCFF99"),
     TURQUOISE("#99FFCC"),
     AZURE("#99CCFF"),
