@@ -170,7 +170,7 @@
               <condition>
                 <inline name="">
                   <ST>
-                    <xhtml:p><![CDATA[and Y Z]]></xhtml:p>
+                    <xhtml:p><![CDATA[not (X and Y)]]></xhtml:p>
                   </ST>
                 </inline>
               </condition>

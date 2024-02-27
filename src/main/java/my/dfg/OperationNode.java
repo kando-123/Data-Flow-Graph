@@ -15,6 +15,7 @@ public class OperationNode extends Node
     public OperationNode(NodeOperation operation)
     {
         super(NodeType.OPERATION);
+        this.operation = operation;
     }
 
     @Override
@@ -22,7 +23,7 @@ public class OperationNode extends Node
     {
         StringBuilder builder = new StringBuilder();
         builder.append("[label=\"")
-                .append(operation == NodeOperation.DISJUNCTION ? "OR" : "AND")
+                .append(operation.equals(NodeOperation.CONJUNCTION) ? "AND" : "OR")
                 .append("\" shape=\"oval\"]");
         return builder.toString();
     }

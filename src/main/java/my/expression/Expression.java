@@ -28,11 +28,16 @@ public class Expression
     
     private List<Term> terms;
     
-    public Expression(String text) throws Exception
+    public Expression(String infixNotation) throws Exception
     {
+        Converter converter = new Converter(infixNotation);
+        converter.transform();
+        
+        String prefixNotation = converter.getPrefix();
+        
         terms = new ArrayList<>();
         
-        String[] pieces = text.split(" ");
+        String[] pieces = prefixNotation.split(" ");
         
         int counter = 1;
         for (var piece : pieces)

@@ -220,6 +220,13 @@ public class Graph
                 return identifier;
             }
         }
+        
+        private boolean isNegated = false;
+        
+        public boolean isNegated()
+        {
+            return isNegated;
+        }
 
         public ExpressionStructure(Expression expression, int index)
         {
@@ -256,8 +263,16 @@ public class Graph
                     Operation operation = ((OperationTerm) term).getOperation();
                     if (operation == Operation.NEGATION)
                     {
-                        /* Just remember to negate the next time. */
-                        attribute = EdgeAttribute.NEGATION;
+                        if (outputNode == null)
+                        {
+                            /* Remember to negate the whole expression later. */
+                            isNegated = true;
+                        }
+                        else
+                        {
+                            /* Just remember to negate the next time. */
+                            attribute = EdgeAttribute.NEGATION;
+                        }
                         continue;
                     }
                     else
@@ -433,8 +448,13 @@ public class Graph
             builder.append(conditionStr.getOutputIdentifier())
                     .append(" -> ")
                     .append(transitionLabel)
-                    .append("_Bridge;\n")
-                    .append("}\n");
+                    .append("_Bridge");
+            if (conditionStr.isNegated())
+            {
+                // Negate the edge if needed.
+                builder.append(" [arrowhead=\"odot\"]");
+            }
+            builder.append(";\n}\n");
             
             // Remember the description.
             description = builder.toString();
