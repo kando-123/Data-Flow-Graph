@@ -1,0 +1,89 @@
+digraph DFG
+{
+/* Steps */
+subgraph S0
+{
+node [style="filled", color="#FF9999"];
+S0_Set [label="OR" shape="oval"];
+S0_Clear [label="AND" shape="oval"];
+S0_Output [label="OR" shape="oval"];
+S0_Internal [label="AND" shape="oval"];
+S0_Read [label="S0" shape="invhouse"];
+S0_Write [label="S0" shape="house"];
+S0_Set -> S0_Internal -> S0_Output;
+S0_Clear -> S0_Output;
+S0_Read -> S0_Clear;
+S0_Read -> S0_Internal [arrowhead="odot"];
+S0_Output -> S0_Write;
+}
+
+subgraph S1
+{
+node [style="filled", color="#FFFF99"];
+S1_Set [label="OR" shape="oval"];
+S1_Clear [label="AND" shape="oval"];
+S1_Output [label="OR" shape="oval"];
+S1_Internal [label="AND" shape="oval"];
+S1_Read [label="S1" shape="invhouse"];
+S1_Write [label="S1" shape="house"];
+S1_Set -> S1_Internal -> S1_Output;
+S1_Clear -> S1_Output;
+S1_Read -> S1_Clear;
+S1_Read -> S1_Internal [arrowhead="odot"];
+S1_Output -> S1_Write;
+}
+
+subgraph S2
+{
+node [style="filled", color="#99FF99"];
+S2_Set [label="OR" shape="oval"];
+S2_Clear [label="AND" shape="oval"];
+S2_Output [label="OR" shape="oval"];
+S2_Internal [label="AND" shape="oval"];
+S2_Read [label="S2" shape="invhouse"];
+S2_Write [label="S2" shape="house"];
+S2_Set -> S2_Internal -> S2_Output;
+S2_Clear -> S2_Output;
+S2_Read -> S2_Clear;
+S2_Read -> S2_Internal [arrowhead="odot"];
+S2_Output -> S2_Write;
+}
+
+/* Transitions */
+subgraph T0
+{
+node [style="filled" color="lightgrey"];
+T0_Bridge [label="AND" shape="oval"];
+subgraph C0
+{
+C0_N0 [label="X" shape="invhouse"];
+}
+
+C0_N0 -> T0_Bridge [arrowhead="odot"];
+}
+subgraph T1
+{
+node [style="filled" color="lightgrey"];
+T1_Bridge [label="AND" shape="oval"];
+subgraph C1
+{
+C1_N0 [label="AND" shape="oval"];
+C1_N1 [label="X" shape="invhouse"];
+C1_N1 -> C1_N0;
+C1_N2 [label="Y" shape="invhouse"];
+C1_N2 -> C1_N0;
+}
+
+C1_N0 -> T1_Bridge [arrowhead="odot"];
+}
+/* Connections */
+S0_Output -> T0_Bridge;
+T0_Bridge -> S0_Clear;
+T0_Bridge -> S1_Set;
+T0_Bridge -> S2_Set;
+S1_Output -> T1_Bridge;
+T1_Bridge -> S1_Clear;
+S2_Output -> T1_Bridge;
+T1_Bridge -> S2_Clear;
+T1_Bridge -> S0_Set;
+}

@@ -3,8 +3,10 @@
  */
 package my.main;
 
-import my.dfg.Graph;
-import my.sfc.SFC;
+import javax.swing.*;
+import my.dfg.*;
+import my.sfc.*;
+import my.view.*;
 
 /**
  *
@@ -14,17 +16,15 @@ public class DataFlowGraph
 {
     public static void main(String[] args)
     {
-        SFC sfc = new SFC();
-        try
-        {
-            sfc.readFromXML("plc.xml");
-            Graph dfg = new Graph();
-            dfg.constructGraph(sfc);
-            System.out.println(dfg.toString());
-        }
-        catch (Exception e)
-        {
-            System.err.println(e.getMessage());
-        }
+        JFrame window = new JFrame();
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setTitle("DOT description for DFG constructed from SFC read from XML");
+        
+        GUIPanel panel = new GUIPanel();
+        window.add(panel);
+        window.pack();
+        
+        window.setLocationRelativeTo(null);
+        window.setVisible(true);
     }
 }
