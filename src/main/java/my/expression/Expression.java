@@ -49,12 +49,12 @@ public class Expression
             }
             else
             {
-                throw new Exception("Expression.<init>");
+                throw new Exception("Expression.<init>: a term is null");
             }
             
             if (counter == 0)
             {
-                throw new Exception("Expression.<init>");
+                throw new Exception("Expression.<init>: erroneous expression");
             }
             switch (term.getType())
             {
@@ -74,7 +74,7 @@ public class Expression
         }
         if (counter > 0)
         {
-            throw new Exception("Expression.<init>");
+            throw new Exception("Expression.<init>: erroneous expression");
         }
     }
     
