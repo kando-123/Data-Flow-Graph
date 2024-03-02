@@ -28,7 +28,7 @@ public class Converter {
     }
 
     public void transform() {
-        reverseInfixExpression();
+        //reverseInfixExpression();
         ShuntingYard shuntingYard = new ShuntingYard(infix);
         String[] tokens = shuntingYard.transform();
         prefix = String.join(" ", tokens);
@@ -55,10 +55,10 @@ public class Converter {
                 sb.setCharAt(i, '(');
             }
         }
-        infix = sb.reverse().toString();
-        infix = infix.replace("DNA", "AND");
-        infix = infix.replace("RO", "OR");
-        infix = infix.replace("TON", "NOT");
+        //infix = sb.reverse().toString();
+        //infix = infix.replace("DNA", "AND");
+        //infix = infix.replace("RO", "OR");
+        //infix = infix.replace("TON", "NOT");
     }
 
     /*

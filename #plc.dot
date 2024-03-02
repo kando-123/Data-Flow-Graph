@@ -68,9 +68,9 @@ T1_Bridge [label="AND" shape="oval"];
 subgraph C1
 {
 C1_N0 [label="AND" shape="oval"];
-C1_N1 [label="X" shape="invhouse"];
+C1_N1 [label="Y" shape="invhouse"];
 C1_N1 -> C1_N0;
-C1_N2 [label="Y" shape="invhouse"];
+C1_N2 [label="X" shape="invhouse"];
 C1_N2 -> C1_N0;
 }
 
