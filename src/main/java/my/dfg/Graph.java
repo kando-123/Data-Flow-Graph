@@ -83,12 +83,15 @@ public class Graph
             StringBuilder builder = new StringBuilder();
             
             // Description header.
-            builder.append("subgraph ")
+            builder.append("subgraph cluster_")
                     .append(stepLabel)
                     .append("\n");
             
             // Opening brace.
             builder.append("{\n");
+            
+            // Style of the cluster.
+            builder.append("color=\"#000000\";\n");
             
             // Style of all nodes.
             builder.append("node [style=\"filled\", color=\"")
@@ -240,12 +243,16 @@ public class Graph
             StringBuilder builder = new StringBuilder();
             
             // Description header.
-            builder.append("subgraph ")
+            builder.append("subgraph cluster_")
                     .append(expressionLabel)
                     .append("\n");
             
             // Opening brace.
             builder.append("{\n");
+            
+            // Style of the cluster.
+            builder.append("color=\"#000000\";\n")
+                    .append("style=\"dashed\";\n");
             
             // Counter for enumerating the nodes.
             int nodeCounter = 0;
@@ -426,10 +433,13 @@ public class Graph
             StringBuilder builder = new StringBuilder();
             
             // Description header.
-            builder.append("subgraph ")
+            builder.append("subgraph cluster_")
                     .append(transitionLabel)
                     .append("\n");
             builder.append("{\n");
+            
+            // Style of the cluster.
+            builder.append("color=\"#000000\";\n");
             
             // Style of the nodes.
             builder.append("node [style=\"filled\" color=\"lightgrey\"];\n");
