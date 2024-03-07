@@ -44,6 +44,8 @@ public class Graph
     {
         private final Node settingNode;
         private final Node clearingNode;
+        private final Node readingNode;
+        
         private final Node outputNode;
 
         private final String stepLabel;
@@ -59,25 +61,25 @@ public class Graph
             settingNode = new OperationNode(NodeOperation.DISJUNCTION);
             clearingNode = new OperationNode(NodeOperation.CONJUNCTION);
             outputNode = new OperationNode(NodeOperation.DISJUNCTION);
-            Node internal = new OperationNode(NodeOperation.CONJUNCTION);
-            Node getter = new ReadingNode(stepLabel);
-            Node setter = new WritingNode(stepLabel);
+            readingNode = new ReadingNode(stepLabel);
+            Node writingNode = new WritingNode(stepLabel);
+            Node internalNode = new OperationNode(NodeOperation.CONJUNCTION);
             
             /* Add the nodes to the graph. */
             nodes.add(settingNode);
-            nodes.add(internal);
+            nodes.add(internalNode);
             nodes.add(clearingNode);
             nodes.add(outputNode);
-            nodes.add(getter);
-            nodes.add(setter);
+            nodes.add(readingNode);
+            nodes.add(writingNode);
             
             /* Join the nodes. */
-            joinNodes(settingNode, internal, EdgeAttribute.SIMPLE);
-            joinNodes(internal, outputNode, EdgeAttribute.SIMPLE);
+            joinNodes(settingNode, internalNode, EdgeAttribute.SIMPLE);
+            joinNodes(internalNode, outputNode, EdgeAttribute.SIMPLE);
             joinNodes(clearingNode, outputNode, EdgeAttribute.SIMPLE);
-            joinNodes(getter, internal, EdgeAttribute.NEGATION);
-            joinNodes(getter, clearingNode, EdgeAttribute.SIMPLE);
-            joinNodes(outputNode, setter, EdgeAttribute.SIMPLE);
+            joinNodes(readingNode, internalNode, EdgeAttribute.NEGATION);
+            joinNodes(readingNode, clearingNode, EdgeAttribute.SIMPLE);
+            joinNodes(outputNode, writingNode, EdgeAttribute.SIMPLE);
             
             /* Create the description. */
             StringBuilder builder = new StringBuilder();
@@ -113,15 +115,15 @@ public class Graph
                     .append(";\n");
             builder.append(stepLabel)
                     .append("_Internal ")
-                    .append(internal.getDescription())
+                    .append(internalNode.getDescription())
                     .append(";\n");
             builder.append(stepLabel)
                     .append("_Read ")
-                    .append(getter.getDescription())
+                    .append(readingNode.getDescription())
                     .append(";\n");
             builder.append(stepLabel)
                     .append("_Write ")
-                    .append(setter.getDescription())
+                    .append(writingNode.getDescription())
                     .append(";\n");
             
             // Connections of the nodes.
@@ -165,9 +167,9 @@ public class Graph
             return clearingNode;
         }
 
-        public Node getOutputNode()
+        public Node getReadingNode()
         {
-            return outputNode;
+            return readingNode;
         }
 
         public String getDescription()
@@ -537,12 +539,12 @@ public class Graph
             for (var step : precedingSteps)
             {
                 var stepStr = stepStructures.get(step);
-                joinNodes(stepStr.getOutputNode(), transitionStr.getBridgeNode());
+                joinNodes(stepStr.getReadingNode(), transitionStr.getBridgeNode());
                 joinNodes(transitionStr.getBridgeNode(), stepStr.getClearingNode());
                 
                 // Define those connections in the description.
                 builder.append(stepStr.getLabel())
-                        .append("_Output -> ")
+                        .append("_Read -> ")
                         .append(transitionStr.getLabel())
                         .append("_Bridge;\n");
                 builder.append(transitionStr.getLabel())
